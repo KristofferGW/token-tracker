@@ -10,6 +10,21 @@ async function getWalletsWithBalance(walletAddresses, tokenContracts, requestedC
     case 'polygon':
       chain = EvmChain.POLYGON;
       break;
+    case 'bsc':
+      chain = EvmChain.BSC;
+      break;
+    case 'arbitrum':
+      chain = EvmChain.ARBITRUM;
+      break;
+    case 'base':
+      chain = EvmChain.BASE;
+      break;
+    case 'optimism':
+      chain = EvmChain.OPTIMISM;
+      break;
+    case 'linea':
+      chain = EvmChain.LINEA;
+      break;
   }
 
   const walletBalances = [];
