@@ -9,7 +9,6 @@ export default {
   },
   methods: {
     search() {
-      // You can perform your search functionality here
       console.log("Searching with Wallet Addresses:", this.$refs.walletAddressesInput.walletAddresses);
       console.log("Searching with Token Contracts:", this.$refs.tokenContractsInput.tokenContracts);
     }
