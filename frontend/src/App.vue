@@ -1,11 +1,13 @@
 <script>
 import WalletAddressesInput from './components/WalletAddressesInput.vue';
 import TokenContractsInput from './components/TokenContractsInput.vue';
+import SearchButton from './components/SearchButton.vue';
 
 export default {
   components: {
     WalletAddressesInput,
-    TokenContractsInput
+    TokenContractsInput,
+    SearchButton
   },
   methods: {
     search() {
