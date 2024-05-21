@@ -4,6 +4,7 @@ import './App.css';
 function App() {
   const [ethAddresses, setEthAddresses] = useState('');
   const [tokenAddresses, setTokenAddresses] = useState('');
+  const [selectedChain, setSelectedChain] = useState('');
 
   const formatAddresses = (addresses) => {
     addresses = addresses.replace(/\s+/g, '');
@@ -19,9 +20,14 @@ function App() {
     setTokenAddresses(formatAddresses(e.target.value));
   }
 
+  const handleChainChange = (e) => {
+    setSelectedChain(e.target.value);
+  }
+
   const handleSearch = () => {
     console.log('Wallet addresses: ', ethAddresses);
     console.log('Token contract addresses: ', tokenAddresses);
+    console.log('Selected Chain: ', selectedChain);
   }
 
   return (
@@ -37,7 +43,17 @@ function App() {
         onChange={handleTokenChange}
         placeholder='Enter token contract addresses here'
       />
-      <br/>
+      <hr />
+      <select value={selectedChain} onChange={handleChainChange}>
+        <option value="ethereum">Ethereum</option>
+        <option value="polygon">Polygon</option>
+        <option value="bsc">BSC</option>
+        <option value="arbitrum">Arbitrum</option>
+        <option value="base">Base</option>
+        <option value="optimism">Optimism</option>
+        <option value="linea">Linea</option>
+      </select>
+
       <button onClick={handleSearch}>Search</button>
     </div>
   );
