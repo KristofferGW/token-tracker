@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import './App.css';
+import SearchResult from './components/SearchResult';
 
 function App() {
   const [ethAddresses, setEthAddresses] = useState('');
   const [tokenAddresses, setTokenAddresses] = useState('');
-  const [selectedChain, setSelectedChain] = useState('');
+  const [selectedChain, setSelectedChain] = useState('ethereum');
+  const [showResults, setShowResults] = useState(false);
+  const [results, setResults] = useState([]);
 
   const formatAddresses = (addresses) => {
     addresses = addresses.replace(/\s+/g, '');
@@ -24,10 +27,36 @@ function App() {
     setSelectedChain(e.target.value);
   }
 
-  const handleSearch = () => {
-    console.log('Wallet addresses: ', ethAddresses);
-    console.log('Token contract addresses: ', tokenAddresses);
-    console.log('Selected Chain: ', selectedChain);
+  const handleSearch = async () => {
+    setShowResults(true);
+    const response = await fetchWalletsWithBalances();
+    setResults(response);
+  }
+
+  const fetchWalletsWithBalances = async () => {
+    const endpoint = 'http://localhost:3000/getWalletsWithTokenBalances';
+    const params = new URLSearchParams({
+      addresses: ethAddresses,
+      tokens: tokenAddresses,
+      chain: selectedChain
+    });
+    const url = endpoint + '?' + params.toString();
+
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: headers
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+      return [];
+    }
   }
 
   return (
@@ -55,6 +84,10 @@ function App() {
       </select>
 
       <button onClick={handleSearch}>Search</button>
+
+      {showResults && (
+        <SearchResult results={results} />
+      )}
     </div>
   );
 }
